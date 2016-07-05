@@ -1,0 +1,16 @@
+﻿.my-input 
+ {
+  font: bold 33px/1.8 cursive;
+  color: green;
+ }
+.body-style
+ {
+  background: url(img/fon.jpg) repeat-y #fc0;
+ }
+.button
+ {
+  height:63px;
+  width:63px;
+  background: url(img/poisk.png) repeat-y #fc0;
+  margin: 0px 10px 0px 0px;
+ }
