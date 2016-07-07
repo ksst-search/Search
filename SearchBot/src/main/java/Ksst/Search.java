@@ -7,7 +7,7 @@ import java.util.List;
  * Created by StudentAlex on 06.07.2016.
  */
 public class Search {
-    public static void main(String[] args) throws Exception {
+    public static void main3(String[] args) throws Exception {
       List<String> link =new ArrayList<String>();
         link.add("http://yandex.ru");
         link.add("http://google.ru");
@@ -25,7 +25,7 @@ public class Search {
             //загружаем страницу по полученному адресу
             htmlstring=RobotSearch.LoadUrlPage(link.get(i).toString());
             htmlstring=RobotSearch.ParceHtml(htmlstring);
-            RobotSearch.ParceHtmllink(htmlstring,link);
+            RobotSearch.ParceHtmllink(htmlstring,link,1);
         }
 
        // String htmlstring=new String();

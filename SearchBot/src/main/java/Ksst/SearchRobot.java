@@ -24,7 +24,7 @@ public class SearchRobot {
         String line=new String();
         String inputLine;
         while ((inputLine = in.readLine()) != null) {
-            System.out.println(inputLine);
+            //System.out.println(inputLine);
             line=line+inputLine;
         }
         in.close();
@@ -36,10 +36,14 @@ public class SearchRobot {
         return Jsoup.parse(html).text();
     }
 
-    public static List<String> ParceHtmllink(String html,List<String> links ) throws Exception {
+    public static List<String> ParceHtmllink(String html,List<String> links,int i ) throws Exception {
         Document doc = Jsoup.parse(html);
         for (Element element : doc.select("a[href]")) {
-            links.add(element.attr("href"));
+            if (element.attr("href").toString().charAt(0) == '/') {
+                links.add(links.get(i)+element.attr("href"));
+            } else {
+                links.add(element.attr("href"));
+            }
         }
         return links;
     }

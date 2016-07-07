@@ -74,8 +74,8 @@ public class Application implements CommandLineRunner {
         // System.out.println("Waiting five seconds...");
         // Thread.sleep(5000);
         System.out.println("Sending message...");
-        rabbitTemplate.convertAndSend(queueName,"Hello Send");
+        rabbitTemplate.convertAndSend(queueName,"helloy");
         receiver().getLatch().await(10000, TimeUnit.MILLISECONDS);
-        context.close();
+      //  context.close();
     }
 }
