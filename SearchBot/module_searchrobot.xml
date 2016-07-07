@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_searchrobot" default="compile.module.searchrobot">
+  <dirname property="module.searchrobot.basedir" file="${ant.file.module_searchrobot}"/>
+  
+  <property name="module.jdk.home.searchrobot" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.searchrobot" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.searchrobot" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.searchrobot" value="-encoding UTF-8 -source 1.5 -target 1.5 ${compiler.args}"/>
+  
+  <property name="searchrobot.output.dir" value="${module.searchrobot.basedir}/target/classes"/>
+  <property name="searchrobot.testoutput.dir" value="${module.searchrobot.basedir}/target/test-classes"/>
+  
+  <path id="searchrobot.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="searchrobot.module.production.classpath">
+    <path refid="${module.jdk.classpath.searchrobot}"/>
+    <path refid="library.maven:_org.jsoup:jsoup:1.9.2.classpath"/>
+  </path>
+  
+  <path id="searchrobot.runtime.production.module.classpath">
+    <pathelement location="${searchrobot.output.dir}"/>
+    <path refid="library.maven:_org.jsoup:jsoup:1.9.2.classpath"/>
+  </path>
+  
+  <path id="searchrobot.module.classpath">
+    <path refid="${module.jdk.classpath.searchrobot}"/>
+    <pathelement location="${searchrobot.output.dir}"/>
+    <path refid="library.maven:_org.jsoup:jsoup:1.9.2.classpath"/>
+  </path>
+  
+  <path id="searchrobot.runtime.module.classpath">
+    <pathelement location="${searchrobot.testoutput.dir}"/>
+    <pathelement location="${searchrobot.output.dir}"/>
+    <path refid="library.maven:_org.jsoup:jsoup:1.9.2.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.searchrobot">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.searchrobot">
+    <patternset refid="excluded.from.module.searchrobot"/>
+  </patternset>
+  
+  <path id="searchrobot.module.sourcepath">
+    <dirset dir="${module.searchrobot.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  <path id="searchrobot.module.test.sourcepath">
+    <dirset dir="${module.searchrobot.basedir}">
+      <include name="src/test/java"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.searchrobot" depends="compile.module.searchrobot.production,compile.module.searchrobot.tests" description="Compile module searchrobot"/>
+  
+  <target name="compile.module.searchrobot.production" depends="register.custom.compilers" description="Compile module searchrobot; production classes">
+    <mkdir dir="${searchrobot.output.dir}"/>
+    <javac2 destdir="${searchrobot.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.searchrobot}/javac">
+      <compilerarg line="${compiler.args.searchrobot}"/>
+      <bootclasspath refid="searchrobot.module.bootclasspath"/>
+      <classpath refid="searchrobot.module.production.classpath"/>
+      <src refid="searchrobot.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.searchrobot"/>
+    </javac2>
+    
+    <copy todir="${searchrobot.output.dir}">
+      <fileset dir="${module.searchrobot.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.searchrobot.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.searchrobot.tests" depends="register.custom.compilers,compile.module.searchrobot.production" description="compile module searchrobot; test classes" unless="skip.tests">
+    <mkdir dir="${searchrobot.testoutput.dir}"/>
+    <javac2 destdir="${searchrobot.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.searchrobot}/javac">
+      <compilerarg line="${compiler.args.searchrobot}"/>
+      <bootclasspath refid="searchrobot.module.bootclasspath"/>
+      <classpath refid="searchrobot.module.classpath"/>
+      <src refid="searchrobot.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.searchrobot"/>
+    </javac2>
+    
+    <copy todir="${searchrobot.testoutput.dir}">
+      <fileset dir="${module.searchrobot.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.searchrobot" description="cleanup module">
+    <delete dir="${searchrobot.output.dir}"/>
+    <delete dir="${searchrobot.testoutput.dir}"/>
+  </target>
+</project>
